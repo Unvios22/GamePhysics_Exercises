@@ -1,21 +1,41 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Code.Readonly_Data;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
     [Range(1f, 100f)] [SerializeField] float movementSpeed = 1f;
-     float rotationSpeed = 1f;
+	[SerializeField] private Rigidbody _playerRigidbody;
+	[SerializeField] private float _jumpForce = 450f;
+	float rotationSpeed = 1f;
 	private Animator _playerAnimator;
-
+	private bool _isOnGround;
+	private Transform _playerTransform;
+	private bool _gameStarted;
+	
 	private void Start() {
 		_playerAnimator = gameObject.GetComponentInChildren<Animator>();
+		_playerRigidbody = GameObject.FindWithTag("Player").GetComponent<Rigidbody>();
+		_playerTransform = this.transform;
+		_gameStarted = true;
+
 	}
 
 	private void Update() {
         ReadInput();
 		ApplyAnimationTriggers();
     }
+	
+	void OnDrawGizmos()
+	{
+		if (_gameStarted){
+			Gizmos.color = Color.red;
+			Gizmos.DrawSphere(
+				new Vector3(_playerTransform.position.x, _playerTransform.position.y - 1f, _playerTransform.position.z),
+				1f);
+		}
+	}
 
 	private void ReadInput(){
 		var x = Input.GetAxis("Horizontal") * Time.deltaTime * 150.0f * rotationSpeed;
@@ -24,6 +44,20 @@ public class PlayerController : MonoBehaviour {
 		transform.Rotate(0, x, 0);
 		transform.Translate(0, 0, z);
 
+		Collider[] collisions = Physics.OverlapSphere(new Vector3(_playerTransform.position.x, _playerTransform.position.y - 1f, _playerTransform.position.z), 1f);
+		foreach (var collision in collisions){
+			if (!collision.CompareTag("Player") && collision.gameObject.layer != 9){ // 9 == PlayerArmature layer
+				Debug.Log(collision.name);
+				Debug.Log(collision.gameObject.layer);
+				_isOnGround = true;
+				break;
+			}
+			_isOnGround = false;
+		}
+		
+		if (Input.GetKeyDown(KeyCode.Space) && _isOnGround){
+			_playerRigidbody.AddForce(Vector3.up * _jumpForce);
+		}
 	}
 	
 	private void ApplyAnimationTriggers(){
@@ -53,5 +87,4 @@ public class PlayerController : MonoBehaviour {
 			_playerAnimator.SetTrigger(AnimatorTriggers.STATIONARY);
 		}
 	}
-	
 }

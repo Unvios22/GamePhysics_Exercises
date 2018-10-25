@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class Elevator : MonoBehaviour {
 	private Vector3 _elevatorStop = new Vector3(0f, 10f, 0f);
 	private Vector3 _elevatorGround;
 	private bool _goingUp;
+	private bool _goingDown = true;
 	private bool _playerOnGround;
 	private Transform _playerTransform;
 
@@ -20,14 +22,16 @@ public class Elevator : MonoBehaviour {
 	}
 
 	private void OnTriggerStay(Collider collider) {
-		_elevatorTransform.position = Vector3.Lerp(_elevatorTransform.position, _elevatorStop, _time * Time.deltaTime);
-		_goingUp = true;
-		_playerOnGround = false;
+		if (collider.CompareTag("Player")){
+			_elevatorTransform.position = Vector3.Lerp(_elevatorTransform.position, _elevatorStop, _time * Time.deltaTime);
+			_playerOnGround = false;
+			_goingDown = false;
+		}
 	}
 
 	private void OnTriggerExit(Collider other) {
 		if (other.CompareTag("Player")) {
-			_goingUp = false;
+			_goingDown = true;
 		}
 	}
 
@@ -35,13 +39,19 @@ public class Elevator : MonoBehaviour {
 		if (_playerTransform.position.y <= _elevatorGround.y + 1f) {
 			_playerOnGround = true;
 		}
-		if (!_goingUp) {
+		else{
+			_playerOnGround = false;
+		}
+		if (_elevatorTransform.position == _elevatorStart){
+			_goingDown = false;
+		}
+		if (_goingDown) {
 			_elevatorTransform.position =
 				Vector3.Lerp(_elevatorTransform.position, _elevatorStart, _time * Time.deltaTime);
 			if (!_playerOnGround) {
 				_playerTransform.position = Vector3.Lerp(_playerTransform.position,
-					(new Vector3(_playerTransform.position.x, _elevatorStart.y, _playerTransform.position.z)),
-					_time * Time.deltaTime);
+					new Vector3(_playerTransform.position.x, _elevatorStart.y, _playerTransform.position.z),
+					_time  * Time.deltaTime);
 			}
 		}
 	}
