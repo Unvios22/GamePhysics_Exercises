@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Code.Readonly_Data;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
@@ -12,34 +13,45 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private void Update() {
-        var x = Input.GetAxis("Horizontal") * Time.deltaTime * 150.0f * rotationSpeed;
-        var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f * movementSpeed;
+        ReadInput();
+		ApplyAnimationTriggers();
+    }
 
-        transform.Rotate(0, x, 0);
-        transform.Translate(0, 0, z);
+	private void ReadInput(){
+		var x = Input.GetAxis("Horizontal") * Time.deltaTime * 150.0f * rotationSpeed;
+		var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f * movementSpeed;
 
+		transform.Rotate(0, x, 0);
+		transform.Translate(0, 0, z);
+
+	}
+	
+	private void ApplyAnimationTriggers(){
 		if (Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Vertical") > 0) {
-
-			_playerAnimator.ResetTrigger("isStationary");
-
+			_playerAnimator.ResetTrigger(AnimatorTriggers.STATIONARY);
+			
 			if (Input.GetKey(KeyCode.LeftShift)) {
-				_playerAnimator.SetTrigger("isRunning");
-				_playerAnimator.ResetTrigger("isMoving");
+				_playerAnimator.ResetTrigger(AnimatorTriggers.SNEAKING);
+				_playerAnimator.ResetTrigger(AnimatorTriggers.WALKING);
+				_playerAnimator.SetTrigger(AnimatorTriggers.RUNNING);
 			}
 			else if (Input.GetKey(KeyCode.C)) {
-				_playerAnimator.SetTrigger("isSneaking");
-				_playerAnimator.ResetTrigger("isMoving");
+				_playerAnimator.ResetTrigger(AnimatorTriggers.WALKING);
+				_playerAnimator.ResetTrigger(AnimatorTriggers.RUNNING);
+				_playerAnimator.SetTrigger(AnimatorTriggers.SNEAKING);
 			}
-			_playerAnimator.SetTrigger("isMoving");
-			
+			else{
+				_playerAnimator.ResetTrigger(AnimatorTriggers.RUNNING);
+				_playerAnimator.ResetTrigger(AnimatorTriggers.SNEAKING);
+				_playerAnimator.SetTrigger(AnimatorTriggers.WALKING);
+			}
 		}
 		else {
-			_playerAnimator.SetTrigger("isStationary");
-			_playerAnimator.ResetTrigger("isMoving");
-			_playerAnimator.ResetTrigger("isSneaking");
-			_playerAnimator.ResetTrigger("isRunning");
-			
+			_playerAnimator.ResetTrigger(AnimatorTriggers.RUNNING);
+			_playerAnimator.ResetTrigger(AnimatorTriggers.SNEAKING);
+			_playerAnimator.ResetTrigger(AnimatorTriggers.WALKING);
+			_playerAnimator.SetTrigger(AnimatorTriggers.STATIONARY);
 		}
-    }
+	}
 	
 }
