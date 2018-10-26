@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour {
 			Gizmos.color = Color.red;
 			Gizmos.DrawSphere(
 				new Vector3(_playerTransform.position.x, _playerTransform.position.y - 1f, _playerTransform.position.z),
-				1f);
+				0.4f);
 		}
 	}
 
@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour {
 		transform.Rotate(0, x, 0);
 		transform.Translate(0, 0, z);
 
-		Collider[] collisions = Physics.OverlapSphere(new Vector3(_playerTransform.position.x, _playerTransform.position.y - 1f, _playerTransform.position.z), 1f);
+		Collider[] collisions = Physics.OverlapSphere(new Vector3(_playerTransform.position.x, _playerTransform.position.y - 1f, _playerTransform.position.z), 0.4f);
 		foreach (var collision in collisions){
 			if (!collision.CompareTag("Player") && collision.gameObject.layer != 9){ // 9 == PlayerArmature layer
 				Debug.Log(collision.name);

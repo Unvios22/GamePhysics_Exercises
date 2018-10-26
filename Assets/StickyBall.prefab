@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 135831092211547180}
   - component: {fileID: 114457341554608126}
   - component: {fileID: 54796317808529960}
+  - component: {fileID: 135994296161562314}
   m_Layer: 0
   m_Name: StickyBall
   m_TagString: Untagged
@@ -119,8 +120,20 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1992771323216942}
   m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.6
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &135994296161562314
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1992771323216942}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.50000006
   m_Center: {x: 0, y: 0, z: 0}
