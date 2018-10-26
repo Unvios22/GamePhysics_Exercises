@@ -380,7 +380,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 1, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0000011920929, y: -1.072, z: 0}
+  m_ConnectedAnchor: {x: 0.00000079472863, y: -1.0720005, z: 0}
   m_UseSpring: 0
   m_Spring:
     spring: 0
@@ -568,7 +568,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 197243316}
   m_LocalRotation: {x: 0, y: 0, z: -0.54792815, w: 0.8365254}
-  m_LocalPosition: {x: -3.1044912, y: 3.9854283, z: -7.706469}
+  m_LocalPosition: {x: -4.09, y: 5.02, z: -7.706469}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 647179508}
@@ -1102,6 +1102,7 @@ GameObject:
   - component: {fileID: 647179511}
   - component: {fileID: 647179510}
   - component: {fileID: 647179509}
+  - component: {fileID: 647179515}
   m_Layer: 0
   m_Name: Ball
   m_TagString: TheBall
@@ -1222,6 +1223,19 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 647179507}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &647179515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 647179507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d07297d61d0286f478994068d0daa854, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ballForceBoost: 80
+  _ballForce: 5
 --- !u!1 &652202395 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100058, guid: cf3910b7639e12447827e45f63f60201,
@@ -1497,7 +1511,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 1, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.2506733, y: 5.4477797, z: -7.706469}
+  m_ConnectedAnchor: {x: -0.7348356, y: 6.4823513, z: -7.706469}
   m_UseSpring: 0
   m_Spring:
     spring: 0
@@ -2118,7 +2132,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &1628039702
 MonoBehaviour:
@@ -2180,7 +2194,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 1, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: -1.1080008, z: 0}
+  m_ConnectedAnchor: {x: 0, y: -1.1079998, z: 0}
   m_UseSpring: 0
   m_Spring:
     spring: 0
